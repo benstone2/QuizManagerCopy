@@ -1,0 +1,70 @@
+﻿@inherits LayoutComponentBase
+@using System.Security.Claims;
+@using Microsoft.AspNetCore.Components.Authorization
+
+<CascadingValue Value="this">
+    <CascadingAuthenticationState>
+       
+        <div class="main">
+            @if (_showNavbar)
+            {
+                <NavigationBar />
+            }
+
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </CascadingAuthenticationState>
+</CascadingValue>
+
+@code
+{
+    public bool _showNavbar = false;
+
+    public string OrganisationShortName = "";
+    public string OrganisationLogoUrl = "";
+    public string OrganisationLongName = "";
+
+    public string UserRole = "";
+    public Guid UserId = Guid.Empty;
+    public Guid OrganisationId = Guid.Empty;
+
+    public void ShowNavbar(bool show)
+    {
+        _showNavbar = show;
+        StateHasChanged();
+    }
+
+    public void SetOrganisationData(string organisationName, string organisationLogoUrl, string organisationLongName)
+    {
+        OrganisationShortName = organisationName;
+        OrganisationLogoUrl = organisationLogoUrl;
+        OrganisationLongName = organisationLongName;
+        StateHasChanged();
+    }
+
+    public void SetUserData(AuthenticationState authState)
+    {
+        UserRole = GetUserRole(authState);
+        UserId = Guid.Parse(authState.User.FindFirst(c => c.Type.Contains("nameidentifier"))?.Value);
+
+        var orgId = authState.User.Claims.Where(c => c.Type == ClaimTypes.Country).Select(c => c.Value).SingleOrDefault();
+
+        OrganisationId = Guid.Parse(orgId);
+    }
+
+    private string GetUserRole(AuthenticationState auth)
+    {
+        if (auth.User.IsInRole("Editor"))
+        {
+            return "Editor";
+        }
+        else if (auth.User.IsInRole("Viewer"))
+        {
+            return "Viewer";
+        }
+
+        return "Restricted";
+    }
+}

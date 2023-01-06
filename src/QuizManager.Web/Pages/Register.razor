@@ -1,0 +1,17 @@
+﻿@page "/register"
+<h3>Register</h3>
+
+@if (RestrictedRegistered == false)
+{
+    <div class="btn btn-primary" @onclick="RegisterRestricted"> Register restricted </div>
+}
+
+@if (ViewOnlyRegistered == false)
+{
+    <div class="btn btn-primary" @onclick="RegisterViewOnly"> Register View </div>
+}
+
+@if (EditorRegistered == false)
+{
+    <div class="btn btn-primary" @onclick="RegisterEditor"> Register Editor </div>
+}

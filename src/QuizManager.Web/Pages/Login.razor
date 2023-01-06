@@ -1,0 +1,44 @@
+﻿@page "/login"
+
+<div class="container" style="height:90vh;">
+
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="justify-content-center">
+            <h2> Webbiskool Quiz Manager </h2>
+            <div class="card" style="min-width:500px">
+                <div class="card-body">
+                    <EditForm id="LoginForm" Model="UserSignInModel" OnValidSubmit="ExecuteLogin">
+
+                        <DataAnnotationsValidator />
+
+                        <div class="form-group">
+                            <label for="email"> Email </label>
+                            <div>
+                                <InputText id="email" class="form-control" @bind-Value="UserSignInModel.EmailAddress" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password"> Password </label>
+                            <div>
+                                <InputText type="password" id="password" class="form-control" @bind-Value="UserSignInModel.Password" />
+                            </div>
+                        </div>
+
+                    </EditForm>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success" type="submit" form="LoginForm"> Log in</button>
+                </div>
+            </div>
+            <br />
+            <NavLink href="/register"> Register an account</NavLink>
+            
+        </div>
+        
+    </div>
+    
+</div>
+
+
+

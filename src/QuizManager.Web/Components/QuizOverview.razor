@@ -1,0 +1,38 @@
+﻿<div class="card">
+    
+    <div class="card-header">
+        <div style="display:flex">
+            <div style="flex-grow:1">
+                @Quiz.Title
+            </div>
+            <div>
+                <div class="btn-group">
+                    <NavLink class="btn btn-success" href="@($"/edit/{Quiz.Id}")"> @(UserRole.Equals("Editor") ? "Edit quiz" : "View quiz") </NavLink>
+                    @if (UserRole == "Editor")
+                    {
+                        <button class="btn btn-danger" @onclick="() => TriggerDeleteWarning()"> Delete </button>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-body">
+        
+        <p> @Quiz.Description</p>
+    </div>
+</div>
+<br />
+
+
+<ModalComponent @ref="Modal">
+    <Title> Delete quiz </Title>
+
+    <Body> Are you sure you want to delete this quiz? </Body>
+
+    <Footer>
+        <div type="button" class="btn btn-secondary" @onclick="CloseModal"> Cancel </div>
+        <div type="button" class="btn btn-danger" @onclick="TriggerDeleteQuiz"> Delete quiz </div>
+    </Footer>
+</ModalComponent>

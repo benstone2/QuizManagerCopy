@@ -1,0 +1,35 @@
+﻿<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">
+        @if (!string.IsNullOrEmpty(Layout.OrganisationLogoUrl))
+        {
+            <img src="@Layout.OrganisationLogoUrl" width="30" height="30" class="d-inline-block align-top" style="padding-right:3px" alt="Small organisation logo">
+        }
+        @if (!string.IsNullOrEmpty(Layout.OrganisationShortName))
+        {
+            @Layout.OrganisationShortName
+        }
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <NavLink href="/" class="nav-link"> Quizzes </NavLink>
+            </li>
+        </ul>
+        <span>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <NavLink href="logout" class="nav-link"> Log out </NavLink>
+                </li>
+            </ul>
+        </span>
+    </div>
+</nav>
+
+@code
+{
+    [CascadingParameter]
+    public MainLayout Layout { get; set; }
+}

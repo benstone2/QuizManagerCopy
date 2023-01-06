@@ -1,0 +1,40 @@
+﻿@page "/"
+@using QuizManager.Shared
+
+<div class="container">
+    <div style="display:flex">
+        <div style="flex-grow:1">
+            <h1> @Layout.OrganisationLongName </h1>
+        </div>
+        @if (Layout.UserRole == UserRoles.Editor)
+        {
+            <NavLink href="/new-quiz" class="nav-link btn btn-success btn-lg"> New quiz </NavLink>
+        }
+    </div>
+
+    <br />
+
+    @if (quizzesLoaded && Quizzes.Count > 0)
+    {
+        foreach (var quiz in Quizzes)
+        {
+            <QuizOverview Quiz="quiz" UserRole="@Layout.UserRole" DeleteQuiz="@((args) => DeleteQuiz((Guid)args))" />
+        }
+    }
+    else
+    {
+        <div class="row align-items-center justify-content-center" style="min-height:500px">
+            @if (quizzesLoaded == false)
+            {
+                <div class="spinner-border text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            }
+            else if (Quizzes.Count == 0)
+            {
+                <p> You have no quizzes </p>
+            }
+        </div>
+    }
+
+</div>
